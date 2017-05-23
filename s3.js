@@ -10,7 +10,7 @@ function client (conf, label) {
 
   let s3 = new S3(conf)
 
-  s3.evets.on('error', err => {
+  s3.events.on('error', err => {
     console.error(label || 'generic', err)
   })
 
@@ -44,7 +44,7 @@ class S3Facility extends Facility {
     async.series([
       next => { super._stop(next) },
       next => {
-        this.cli.off('error')
+        this.cli.events.off('error')
         delete this.cli
         next()
       }
