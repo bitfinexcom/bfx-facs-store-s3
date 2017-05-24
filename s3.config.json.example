@@ -1,0 +1,8 @@
+{
+  "euwest": {
+    "accessKeyId": "",
+    "secretAccessKey": "",
+    "region": "eu-west-1",
+    "bucket": "dev-bfx-1"
+  }
+}
