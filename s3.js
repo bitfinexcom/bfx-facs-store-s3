@@ -2,15 +2,15 @@
 
 const async = require('async')
 const _ = require('lodash')
-const S3 = require('aws-sdk/clients/s3');
+const AWS = require('aws-sdk');
 
 const Facility = require('./base')
 
 function client (conf, label) {
 
-  let s3 = new S3(conf)
+  let s3 = new AWS.S3(conf)
 
-  s3.events.on('error', err => {
+  AWS.events.on('error', err => {
     console.error(label || 'generic', err)
   })
 
@@ -44,7 +44,7 @@ class S3Facility extends Facility {
     async.series([
       next => { super._stop(next) },
       next => {
-        this.cli.events.off('error')
+        //AWS.events.off('error')  hmm, no off in API, possible leak
         delete this.cli
         next()
       }
