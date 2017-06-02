@@ -17,11 +17,11 @@ function client (conf, label) {
   return s3
 }
 
-class S3Facility extends Facility {
+class StoreFacility extends Facility {
   constructor (caller, opts, ctx) {
     super(caller, opts, ctx)
 
-    this.name = 's3'
+    this.name = 'store-s3'
     this._hasConf = true
 
     this.init()
@@ -52,4 +52,4 @@ class S3Facility extends Facility {
   }
 }
 
-module.exports = S3Facility
+module.exports = StoreFacility
