@@ -35,6 +35,12 @@ class StoreFacility extends Facility {
           ['accessKeyId', 'secretAccessKey', 'region']
         )
 
+        const {
+          accessKeyId,
+          secretAccessKey,
+          region
+        } = conf
+
         if (!accessKeyId || !secretAccessKey || !region) {
           return next(
             new Error('accessKeyId, secretAccessKey, or region missing in config')
