@@ -2,12 +2,11 @@
 
 const async = require('async')
 const _ = require('lodash')
-const AWS = require('aws-sdk');
+const AWS = require('aws-sdk')
 
 const Facility = require('./base')
 
 function client (conf, label) {
-
   let s3 = new AWS.S3(conf)
 
   AWS.events.on('error', err => {
@@ -44,7 +43,7 @@ class StoreFacility extends Facility {
     async.series([
       next => { super._stop(next) },
       next => {
-        //AWS.events.off('error')  hmm, no off in API, possible leak
+        // AWS.events.off('error')  hmm, no off in API, possible leak
         delete this.cli
         next()
       }
