@@ -2,12 +2,11 @@
 
 const async = require('async')
 const _ = require('lodash')
-const AWS = require('aws-sdk');
+const AWS = require('aws-sdk')
 
 const Facility = require('./base')
 
 function client (conf, label) {
-
   let s3 = new AWS.S3(conf)
 
   AWS.events.on('error', err => {
@@ -31,11 +30,25 @@ class StoreFacility extends Facility {
     async.series([
       next => { super._start(next) },
       next => {
-        this.cli = client(_.pick(
+        const conf = _.pick(
           this.conf,
           ['accessKeyId', 'secretAccessKey', 'region']
-        ))
-        next()
+        )
+
+        const {
+          accessKeyId,
+          secretAccessKey,
+          region
+        } = conf
+
+        if (!accessKeyId || !secretAccessKey || !region) {
+          return next(
+            new Error('accessKeyId, secretAccessKey, or region missing in config')
+          )
+        }
+
+        this.cli = client(conf)
+        next(null)
       }
     ], cb)
   }
@@ -44,7 +57,7 @@ class StoreFacility extends Facility {
     async.series([
       next => { super._stop(next) },
       next => {
-        //AWS.events.off('error')  hmm, no off in API, possible leak
+        // AWS.events.off('error')  hmm, no off in API, possible leak
         delete this.cli
         next()
       }
