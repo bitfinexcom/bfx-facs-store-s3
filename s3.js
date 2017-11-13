@@ -30,11 +30,19 @@ class StoreFacility extends Facility {
     async.series([
       next => { super._start(next) },
       next => {
-        this.cli = client(_.pick(
+        const conf = _.pick(
           this.conf,
           ['accessKeyId', 'secretAccessKey', 'region']
-        ))
-        next()
+        )
+
+        if (!accessKeyId || !secretAccessKey || !region) {
+          return next(
+            new Error('accessKeyId, secretAccessKey, or region missing in config')
+          )
+        }
+
+        this.cli = client(conf)
+        next(null)
       }
     ], cb)
   }
