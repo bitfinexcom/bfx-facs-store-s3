@@ -3,8 +3,7 @@
 const async = require('async')
 const _ = require('lodash')
 const AWS = require('aws-sdk')
-
-const Facility = require('./base')
+const Base = require('bfx-facs-base')
 
 function client (conf, label) {
   let s3 = new AWS.S3(conf)
@@ -16,7 +15,7 @@ function client (conf, label) {
   return s3
 }
 
-class StoreFacility extends Facility {
+class StoreFacility extends Base {
   constructor (caller, opts, ctx) {
     super(caller, opts, ctx)
 
