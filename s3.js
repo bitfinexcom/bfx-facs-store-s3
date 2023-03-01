@@ -68,7 +68,7 @@ class StoreFacility extends Base {
 
   async upload (params) {
     const command = new PutObjectCommand(params)
-    return this.cli.send(command);
+    return this.cli.send(command)
   }
 
   async uploadStream (params) {
@@ -76,7 +76,7 @@ class StoreFacility extends Base {
       client: this.cli,
       params
     })
-  
+
     return req.done()
   }
 
