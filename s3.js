@@ -2,17 +2,20 @@
 
 const async = require('async')
 const _ = require('lodash')
-const AWS = require('aws-sdk')
 const Base = require('bfx-facs-base')
+const {
+  S3Client,
+  GetObjectCommand,
+  PutObjectCommand,
+  DeleteObjectsCommand
+} = require('@aws-sdk/client-s3')
+const { getSignedUrl } = require('@aws-sdk/s3-request-presigner')
+const { Upload } = require('@aws-sdk/lib-storage')
 
 function client (conf, label) {
-  let s3 = new AWS.S3(conf)
+  const client = new S3Client(conf)
 
-  AWS.events.on('error', err => {
-    console.error(label || 'generic', err)
-  })
-
-  return s3
+  return client
 }
 
 class StoreFacility extends Base {
@@ -29,16 +32,17 @@ class StoreFacility extends Base {
     async.series([
       next => { super._start(next) },
       next => {
-        const conf = _.pick(
+        const credentials = _.pick(
           this.conf,
-          ['accessKeyId', 'secretAccessKey', 'region']
+          ['accessKeyId', 'secretAccessKey']
         )
 
         const {
           accessKeyId,
-          secretAccessKey,
-          region
-        } = conf
+          secretAccessKey
+        } = credentials
+
+        const region = this.conf.region
 
         if (!accessKeyId || !secretAccessKey || !region) {
           return next(
@@ -46,7 +50,7 @@ class StoreFacility extends Base {
           )
         }
 
-        this.cli = client(conf)
+        this.cli = client({ credentials, region })
         next(null)
       }
     ], cb)
@@ -56,11 +60,35 @@ class StoreFacility extends Base {
     async.series([
       next => { super._stop(next) },
       next => {
-        // AWS.events.off('error')  hmm, no off in API, possible leak
         delete this.cli
         next()
       }
     ], cb)
+  }
+
+  async upload (params) {
+    const command = new PutObjectCommand(params)
+    return this.cli.send(command);
+  }
+
+  async uploadStream (params) {
+    const req = new Upload({
+      client: this.cli,
+      params
+    })
+  
+    return req.done()
+  }
+
+  async getSignedUrl (params) {
+    const command = new GetObjectCommand(params)
+    const url = await getSignedUrl(this.cli, command, { expiresIn: 3600 })
+    return url
+  }
+
+  async deleteObjects (params) {
+    const command = new DeleteObjectsCommand(params)
+    return this.cli.send(command)
   }
 }
 
