@@ -82,7 +82,7 @@ class StoreFacility extends Base {
 
   async getSignedUrl (params) {
     const command = new GetObjectCommand(params)
-    const url = await getSignedUrl(this.cli, command, { expiresIn: 3600 })
+    const url = await getSignedUrl(this.cli, command, { expiresIn: params.Expires })
     return url
   }
 
