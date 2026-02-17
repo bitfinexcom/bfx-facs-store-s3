@@ -1,6 +1,6 @@
 {
-  "name": "bfx-facs-store-s3",
-  "version": "0.0.1",
+  "name": "@bitfinex/bfx-facs-store-s3",
+  "version": "1.0.0",
   "private": true,
   "description": "Bitfinex S3 Facility",
   "author": {
@@ -11,13 +11,13 @@
     "bitfinex"
   ],
   "dependencies": {
-    "async": "^3.2.1",
+    "@bitfinex/bfx-facs-base": "git+https://github.com/bitfinexcom/bfx-facs-base.git",
+    "async": "^3.2.4",
     "aws-sdk": "^2.1013.0",
-    "bfx-facs-base": "git+https://github.com/bitfinexcom/bfx-facs-base.git",
     "lodash": "^4.17.21"
   },
-  "engine": {
-    "node": ">=8.0"
+  "engines": {
+    "node": ">=16.0"
   },
   "main": "s3.js",
   "scripts": {
@@ -36,6 +36,6 @@
     }
   ],
   "devDependencies": {
-    "standard": "^10.0.3"
+    "standard": "^17.1.2"
   }
 }

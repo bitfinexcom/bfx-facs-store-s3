@@ -3,7 +3,7 @@
 const async = require('async')
 const _ = require('lodash')
 const AWS = require('aws-sdk')
-const Base = require('bfx-facs-base')
+const Base = require('@bitfinex/bfx-facs-base')
 
 function client (conf, label) {
   let s3 = new AWS.S3(conf)
