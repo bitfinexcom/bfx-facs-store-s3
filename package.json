@@ -1,7 +1,6 @@
 {
   "name": "@bitfinex/bfx-facs-store-s3",
   "version": "1.0.0",
-  "private": true,
   "description": "Bitfinex S3 Facility",
   "author": {
     "name": "prdn",
