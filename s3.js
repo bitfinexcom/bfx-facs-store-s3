@@ -6,7 +6,7 @@ const AWS = require('aws-sdk')
 const Base = require('@bitfinex/bfx-facs-base')
 
 function client (conf, label) {
-  let s3 = new AWS.S3(conf)
+  const s3 = new AWS.S3(conf)
 
   AWS.events.on('error', err => {
     console.error(label || 'generic', err)

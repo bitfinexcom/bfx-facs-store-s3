@@ -21,7 +21,8 @@
   "main": "s3.js",
   "scripts": {
     "test": "npm run lint",
-    "lint": "standard"
+    "lint": "bfx-lint-js . --mocha",
+    "lint:fix": "bfx-lint-js . --fix --mocha"
   },
   "license": "MIT",
   "repository": {
@@ -35,6 +36,6 @@
     }
   ],
   "devDependencies": {
-    "standard": "^17.1.2"
+    "@bitfinex/lint-js": "^1.1.0"
   }
 }
