@@ -16,7 +16,7 @@
     "lodash": "^4.17.21"
   },
   "engines": {
-    "node": ">=16.0"
+    "node": ">=22.0.0"
   },
   "main": "s3.js",
   "scripts": {
