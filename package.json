@@ -12,8 +12,7 @@
   "dependencies": {
     "@bitfinex/bfx-facs-base": "git+https://github.com/bitfinexcom/bfx-facs-base.git#v2.0.0",
     "async": "^3.2.4",
-    "aws-sdk": "^2.1013.0",
-    "lodash": "^4.17.21"
+    "aws-sdk": "^2.1013.0"
   },
   "engines": {
     "node": ">=22.0.0"
