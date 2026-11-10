@@ -1,12 +1,11 @@
 'use strict'
 
 const async = require('async')
-const _ = require('lodash')
 const AWS = require('aws-sdk')
 const Base = require('@bitfinex/bfx-facs-base')
 
 function client (conf, label) {
-  let s3 = new AWS.S3(conf)
+  const s3 = new AWS.S3(conf)
 
   AWS.events.on('error', err => {
     console.error(label || 'generic', err)
@@ -29,10 +28,12 @@ class StoreFacility extends Base {
     async.series([
       next => { super._start(next) },
       next => {
-        const conf = _.pick(
-          this.conf,
-          ['accessKeyId', 'secretAccessKey', 'region']
-        )
+        const conf = {}
+        for (const k of  ['accessKeyId', 'secretAccessKey', 'region']) {
+          if (this.conf.hasOwnProperty(k)) {
+            conf[k] = this.conf[k]
+          }
+        }
 
         const {
           accessKeyId,
