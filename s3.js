@@ -39,7 +39,6 @@ class StoreFacility extends Base {
             conf[k] = this.conf[k]
           }
         }
-        console.log(conf, this.conf)
         const {
           accessKeyId,
           secretAccessKey,
