@@ -29,12 +29,16 @@ class StoreFacility extends Base {
       next => { super._start(next) },
       next => {
         const conf = {}
-        for (const k of  ['accessKeyId', 'secretAccessKey', 'region']) {
-          if (this.conf.hasOwnProperty(k)) {
+        if (!this.conf) {
+          return next(
+            new Error('missing config')
+          )
+        }
+        for (const k of ['accessKeyId', 'secretAccessKey', 'region']) {
+          if (Object.hasOwn(this.conf, k)) {
             conf[k] = this.conf[k]
           }
         }
-
         const {
           accessKeyId,
           secretAccessKey,
